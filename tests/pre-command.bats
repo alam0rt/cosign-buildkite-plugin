@@ -14,9 +14,10 @@ export BUILDKITE_BUILD_CREATOR_EMAIL='samlockart@gmail.com'
 @test "Verify an image" {
   export BUILDKITE_PLUGIN_COSIGN_MODE="verify"
   export BUILDKITE_PLUGIN_COSIGN_IMAGE="samlockart/plugin-tester"
+  export BUILDKITE_PLUGIN_COSIGN_PUBKEY="example/cosign.pub"
   export BUILDKITE_PLUGIN_COSIGN_TAGS=""
 
-  run "$PWD/hooks/post-command"
+  run "$PWD/hooks/pre-command"
 
   assert_success
   assert_output --partial ""
@@ -26,10 +27,11 @@ export BUILDKITE_BUILD_CREATOR_EMAIL='samlockart@gmail.com'
 @test "Verify an image with annotations" {
   export BUILDKITE_PLUGIN_COSIGN_MODE="verify"
   export BUILDKITE_PLUGIN_COSIGN_IMAGE="samlockart/plugin-tester"
+  export BUILDKITE_PLUGIN_COSIGN_PUBKEY="example/cosign.pub"
   export BUILDKITE_PLUGIN_COSIGN_TAGS="key=value"
 
 
-  run "$PWD/hooks/post-command"
+  run "$PWD/hooks/pre-command"
 
   assert_success
   assert_output --partial ""
@@ -39,10 +41,11 @@ export BUILDKITE_BUILD_CREATOR_EMAIL='samlockart@gmail.com'
 @test "Verify an image with incorrect annotations" {
   export BUILDKITE_PLUGIN_COSIGN_MODE="verify"
   export BUILDKITE_PLUGIN_COSIGN_IMAGE="samlockart/plugin-tester"
+  export BUILDKITE_PLUGIN_COSIGN_PUBKEY="example/cosign.pub"
   export BUILDKITE_PLUGIN_COSIGN_TAGS="key=someothervalue"
 
 
-  run "$PWD/hooks/post-command"
+  run "$PWD/hooks/pre-command"
 
   assert_failure
   assert_output --partial ""
@@ -52,8 +55,9 @@ export BUILDKITE_BUILD_CREATOR_EMAIL='samlockart@gmail.com'
 @test "Generate a signature with Buidkite annotations" {
   export BUILDKITE_PLUGIN_COSIGN_MODE="generate"
   export BUILDKITE_PLUGIN_COSIGN_IMAGE="samlockart/plugin-tester"
+  export BUILDKITE_PLUGIN_COSIGN_PUBKEY="example/cosign.pub"
   export BUILDKITE_PLUGIN_COSIGN_TAGS="key=value"
-  run "$PWD/hooks/post-command"
+  run "$PWD/hooks/pre-command"
 
   assert_success
   assert_output --partial ""

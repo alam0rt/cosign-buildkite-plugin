@@ -14,7 +14,7 @@ steps:
           image: 'samlockart/plugin-tester:v1.0.0'
           mode: verify
           require:
-            scanned: true
+            - scanned
 
 ```
 
