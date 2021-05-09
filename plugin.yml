@@ -5,6 +5,8 @@ requirements:
   - cosign
 configuration:
   properties:
+    tags:
+      type: array
     image:
       type: string
   additionalProperties: false

@@ -1,13 +1,42 @@
 #!/bin/bash
 set -euo pipefail
 
+#cosign_version='v0.4.0'
+#cosign_url="https://github.com/sigstore/cosign/releases/download/${cosign_version}/cosign-linux-amd64"
+cosign_executable=./cosign
+pubkey=./cosign.pub
+signature=/tmp/sig.json
+
+mode="$BUILDKITE_PLUGIN_COSIGN_MODE"
 IMAGE="$BUILDKITE_PLUGIN_COSIGN_IMAGE"
-
-echo "--- :1234: Verify image"
-
-
-cosign verify -key ~/cosign.pub $IMAGE
+TAGS="$BUILDKITE_PLUGIN_COSIGN_TAGS"
 
 
+if [[ $mode == "verify" ]]; then
+  echo "--- :1234: Verify image"
 
-buildkite-agent annotate "Signed"
+  args=()
+  args+=(verify -key ${pubkey})
+
+  if [[ $TAGS != "" ]]; then
+    args+=(-a $TAGS)
+  fi
+
+  echo ${cosign_executable} ${args[@]} $IMAGE
+  ${cosign_executable} ${args[@]} $IMAGE > ${signature}
+
+  #buildkite-agent annotate "Image $IMAGE - $type"
+fi
+
+
+if [[ $mode == "generate" ]]; then
+  echo "--- :key: generate signature"
+  args=()
+  args+=(generate)
+
+  for tag in $(env | grep BUILDKITE_BUILD); do
+    args+=(-a "$tag")
+  done
+
+  ${cosign_executable} ${args[@]} $IMAGE > sig.out
+fi

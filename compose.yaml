@@ -1,4 +1,8 @@
 services:
+  tests:
+    image: samlockart/plugin-tester
+    volumes:
+      - ".:/plugin"
   lint:
     image: buildkite/plugin-linter
     command: ['--id', 'alam0rt/cosign']
