@@ -1,0 +1,10 @@
+name: Cosign
+description: Automate the signing of images and commits
+author: https://github.com/alam0rt
+requirements:
+  - cosign
+configuration:
+  properties:
+    pattern:
+      type: string
+  additionalProperties: false
