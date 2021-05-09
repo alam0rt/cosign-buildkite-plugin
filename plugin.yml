@@ -5,6 +5,6 @@ requirements:
   - cosign
 configuration:
   properties:
-    pattern:
+    image:
       type: string
   additionalProperties: false
