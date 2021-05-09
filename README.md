@@ -8,7 +8,7 @@ Add the following to your `pipeline.yml`:
 
 ```yml
 steps:
-  - command: ls
+  - command: echo test
     plugins:
       - alam0rt/cosign#v1.0.0:
           image: 'blah'
@@ -16,7 +16,7 @@ steps:
 
 ## Configuration
 
-### `pattern` (Required, string)
+### `image` (Required, string)
 
 The file name pattern, for example `*.ts`. Supports any pattern supported by [find -name](http://man7.org/linux/man-pages/man1/find.1.html).
 

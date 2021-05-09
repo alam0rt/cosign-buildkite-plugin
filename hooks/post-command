@@ -1,0 +1,13 @@
+#!/bin/bash
+set -euo pipefail
+
+IMAGE="$BUILDKITE_PLUGIN_COSIGN_IMAGE"
+
+echo "--- :1234: Verify image"
+
+
+cosign verify -key ~/cosign.pub $IMAGE
+
+
+
+buildkite-agent annotate "Signed"
