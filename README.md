@@ -8,10 +8,14 @@ Add the following to your `pipeline.yml`:
 
 ```yml
 steps:
-  - command: echo test
+  - command: kubectl set image deployment example app=$BUILDKITE_PLUGIN_COSIGN_IMAGE
     plugins:
       - alam0rt/cosign#v1.0.0:
-          image: 'blah'
+          image: 'samlockart/plugin-tester:v1.0.0'
+          mode: verify
+          require:
+            scanned: true
+
 ```
 
 ## Configuration
