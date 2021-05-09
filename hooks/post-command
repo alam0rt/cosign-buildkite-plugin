@@ -38,5 +38,5 @@ if [[ $mode == "generate" ]]; then
     args+=(-a "$tag")
   done
 
-  ${cosign_executable} ${args[@]} $IMAGE > sig.out
+  ${cosign_executable} ${args[@]} $IMAGE > example/signature.json
 fi
