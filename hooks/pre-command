@@ -1,14 +1,17 @@
 #!/bin/bash
 set -euo pipefail
 
-#cosign_version='v0.4.0'
-#cosign_url="https://github.com/sigstore/cosign/releases/download/${cosign_version}/cosign-linux-amd64"
+cosign_version='v0.4.0'
+cosign_url="https://github.com/sigstore/cosign/releases/download/${cosign_version}/cosign-linux-amd64"
 cosign_executable=./cosign
 
 mode="$BUILDKITE_PLUGIN_COSIGN_MODE"
 pubkey="$BUILDKITE_PLUGIN_COSIGN_PUBKEY"
 IMAGE="$BUILDKITE_PLUGIN_COSIGN_IMAGE"
 TAGS="$BUILDKITE_PLUGIN_COSIGN_TAGS"
+
+
+curl -Lf -o ${cosign_executable} $cosign_url && chmod +x ${cosign_executable}
 
 
 if [[ $mode == "verify" ]]; then
